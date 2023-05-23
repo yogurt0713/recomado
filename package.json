@@ -1,0 +1,12 @@
+{
+    "name": "recomado",
+    "version": "0.0.1",
+    "description": "re-comado",
+    "scripts": {
+        "start": "http-server -c localhost -p 8080 --cors "
+    },
+    "author": "Daisuke Akatsuka",
+    "dependencies": {
+        "http-server": "^14.1.1"
+    }
+}

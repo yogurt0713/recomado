@@ -1,0 +1,71 @@
+<style>
+body {
+  max-width: 800px;
+}
+
+video {
+  width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+li {
+  display: grid;
+  grid-template-areas: "image time participant"
+                       "image action action";
+  grid-template-columns: auto auto 1fr;
+  padding: 0.5em;
+  cursor: default;
+}
+
+li:hover {
+  background-color: #ededf0;
+}
+
+.image {
+  grid-area: image;
+  margin-inline-end: 1em;
+  height: 60px;
+  width: 60px;
+  outline: 1px solid gray;
+  background-color: black;
+}
+
+.time {
+  grid-area: time;
+  margin-inline-end: 0.5em;
+  font-size: small;
+}
+
+.participant {
+  grid-area: participant;
+  font-size: small;
+}
+
+.action {
+  grid-area: action;
+}
+
+</style>
+<body>
+  <video controls></video>
+  <ul></ul>
+
+  <script type="module">
+  import Clazz from "./recomado.js";
+  const recomado = new Clazz();
+  recomado.init({
+    video: document.querySelector("video"),
+    ul: document.querySelector("ul"),
+    movie: "COMADO123004.mp4",
+    annotations: "COMADO123004.json",
+    // _tempStartTime is temporary until we support elapsed time in annotation json.
+    _tempStartTime: "2023-01-01T00:00:00.000Z",
+  });
+  </script>
+</body>
