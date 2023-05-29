@@ -23,7 +23,7 @@ document.getElementById("apply").addEventListener("click", (e) => {
 });
 document.getElementById("save").addEventListener("click", (e) => {
   const textareas = [...document.querySelectorAll("textarea.action")];
-  const text = textareas.map((t) => t.value).join("\n");
+  const text = textareas.map((t) => t.value).join("");
   const logText = document.getElementById("logText");
   logText.value = text;
 });
