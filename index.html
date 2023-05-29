@@ -68,28 +68,29 @@
 <!doctype html>
 <html>
 
-  <body>
+    <body>
 
-    <video controls></video>
-    <ul></ul>
+        <video controls></video>
+        <ul></ul>
 
-    <div class="container">
-      <div class="column">
-        <label for="movie">Choose a movie file:</label><br>
-        <input type="file" id="movie" name="movie" accept="video/mp4"><br>
-        <label for="annotations">Choose a json file:</label><br>
-        <input type="file" id="annotations" name="annotations"
-          accept="text/json"><br><br>
-        <button id="apply">Apply</button>
+        <div class="container">
+            <div class="column">
+                <label for="movie">Choose a movie file:</label><br>
+                <input type="file" id="movie" name="movie" accept="video/mp4"><br>
+                <label for="annotations">Choose a json file:</label><br>
+                <input type="file" id="annotations" name="annotations"
+                    accept="text/json"><br><br>
+                <button id="apply">Apply</button>
+                <button id="save">ログを出力</button>
 
-      </div>
-      <div class="column">
-        <textarea id="logText" class="large-textarea"></textarea>
-      </div>
-    </div>
+            </div>
+            <div class="column">
+                <textarea id="logText" class="large-textarea"></textarea>
+            </div>
+        </div>
 
-    <script src="./script.js" type="module"></script>
+        <script src="./script.js" type="module"></script>
 
-  </body>
+    </body>
 
 </html>

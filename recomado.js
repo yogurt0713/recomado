@@ -20,7 +20,6 @@ export default class Recomado {
 
       switch (annotation.action) {
         case "note": {
-          appendElement(li, "action", annotation.noteText);
           //textareaの文字が更新されたら，annotation.noteTextも更新
           appendElement(li, "action", annotation.noteText).addEventListener(
             "change",
@@ -60,16 +59,16 @@ export default class Recomado {
       this.#ul.append(li);
     }
 
-    const button = document.createElement("button");
+    /*     const button = document.createElement("button");
     button.textContent = "ログを出力";
     button.addEventListener("click", () => {
       //console.log(JSON.stringify(this.#annotations));
       const textareas = [...document.querySelectorAll("textarea.action")];
       const text = textareas.map((t) => t.value).join("");
-      const logText = document.getElementById("logText");
-      logText.value = text;
-    });
-    this.#ul.after(button);
+      const logT = document.getElementById("logText");
+      logT.value = text;
+    }); */
+    //this.#ul.after(button);
 
     this.#ul.addEventListener("click", (e) => {
       const li = e.target.closest("li");
@@ -78,7 +77,7 @@ export default class Recomado {
     });
 
     this.#updateUserScrollEnabled();
-    this.#autoscroll.addEventListener("change", (e) => {
+    this.#autoscroll.addEventListener("scrollchange", (e) => {
       this.#updateUserScrollEnabled();
     });
 

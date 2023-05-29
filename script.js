@@ -21,3 +21,9 @@ document.getElementById("apply").addEventListener("click", (e) => {
     _tempStartTime: "2023-01-01T00:00:00.000Z",
   });
 });
+document.getElementById("save").addEventListener("click", (e) => {
+  const textareas = [...document.querySelectorAll("textarea.action")];
+  const text = textareas.map((t) => t.value).join("\n");
+  const logText = document.getElementById("logText");
+  logText.value = text;
+});
