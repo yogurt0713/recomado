@@ -18,7 +18,7 @@ document.getElementById("apply").addEventListener("click", (e) => {
     autoscroll: document.querySelector("#autoscroll"),
     movie: movieURL,
     annotations: annotationsURL,
-    _tempStartTime: "2023-01-01T00:00:00.000Z",
+    _tempStartTime: "2023-09-01T01:12:52.000Z",
   });
 });
 document.getElementById("save").addEventListener("click", (e) => {
@@ -26,4 +26,20 @@ document.getElementById("save").addEventListener("click", (e) => {
   const text = textareas.map((t) => t.value).join("");
   const logText = document.getElementById("logText");
   logText.value = text;
+  recomado.logAnnotations();
+});
+
+document.getElementById("downloadButton").addEventListener("click", (e) => {
+  const jsonString = recomado.getAnnotations();
+  const blob = new Blob([jsonString], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "transcript.json";
+  document.body.appendChild(a);
+
+  a.click();
+
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 });

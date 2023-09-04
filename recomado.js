@@ -41,7 +41,7 @@ export default class Recomado {
       }
 
       const annotatedTime = new Date(annotation.time);
-      const elapsedTimeMS = annotatedTime - startedTime;
+      const elapsedTimeMS = annotatedTime.getTime() - startedTime.getTime();
       const elapsedSeconds = elapsedTimeMS / 1000;
       const seconds = Math.floor(elapsedSeconds % 60);
       const minutes = Math.floor((elapsedSeconds / 60) % 60);
@@ -101,6 +101,14 @@ export default class Recomado {
     } else {
       this.#ul.classList.remove("user_scroll_disabled");
     }
+  }
+
+  logAnnotations() {
+    console.log(JSON.stringify(this.#annotations, null, 2));
+  }
+
+  getAnnotations() {
+    return JSON.stringify(this.#annotations, null, 2);
   }
 
   #annotations = null;
