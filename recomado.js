@@ -6,6 +6,8 @@ export default class Recomado {
     this.#ul = ul;
     this.#autoscroll = autoscroll;
 
+    
+
     const startedTime = new Date(_tempStartTime);
     const response = await fetch(annotations);
     this.#annotations = await response.json();
@@ -13,8 +15,10 @@ export default class Recomado {
     for (const annotation of this.#annotations) {
       const li = document.createElement("li");
 
+
       const image = appendElement(li, "image");
-      image.src = "sample.jpg";
+      image.src = "images/" + annotation.image;
+
 
       appendElement(li, "participant", annotation.participantName);
 
@@ -123,6 +127,8 @@ function appendElement(parent, className, text) {
   //classNameがactionで'note'の場合，textareaを作成
   if (className === "action" && text !== "☞" && text !== "♥") {
     element = document.createElement("textarea");
+  } else if (className === "image") {
+    element = document.createElement("img");
   } else {
     element = document.createElement("span");
   }

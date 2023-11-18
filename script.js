@@ -3,6 +3,8 @@ const recomado = new Recomado();
 
 let movieURL;
 let annotationsURL;
+
+
 document.getElementById("movie").addEventListener("change", (e) => {
   const file = e.target.files[0];
   movieURL = URL.createObjectURL(file);
@@ -11,6 +13,7 @@ document.getElementById("annotations").addEventListener("change", (e) => {
   const file = e.target.files[0];
   annotationsURL = URL.createObjectURL(file);
 });
+
 document.getElementById("apply").addEventListener("click", (e) => {
   recomado.init({
     video: document.querySelector("video"),
@@ -18,7 +21,7 @@ document.getElementById("apply").addEventListener("click", (e) => {
     autoscroll: document.querySelector("#autoscroll"),
     movie: movieURL,
     annotations: annotationsURL,
-    _tempStartTime: "2023-09-01T01:12:52.000Z",
+    _tempStartTime: "2023-09-29T08:51:22.000Z",
   });
 });
 document.getElementById("save").addEventListener("click", (e) => {
