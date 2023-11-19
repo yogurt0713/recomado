@@ -34,6 +34,12 @@ export default class Recomado {
 
           break;
         }
+        
+        case "ふせん": {
+          appendElement(li, "action", annotation.noteText);
+          break;
+        }
+          
         case "指差し": {
           appendElement(li, "action", "☞");
           break;
@@ -63,16 +69,7 @@ export default class Recomado {
       this.#ul.append(li);
     }
 
-    /*     const button = document.createElement("button");
-    button.textContent = "ログを出力";
-    button.addEventListener("click", () => {
-      //console.log(JSON.stringify(this.#annotations));
-      const textareas = [...document.querySelectorAll("textarea.action")];
-      const text = textareas.map((t) => t.value).join("");
-      const logT = document.getElementById("logText");
-      logT.value = text;
-    }); */
-    //this.#ul.after(button);
+
 
     this.#ul.addEventListener("click", (e) => {
       const li = e.target.closest("li");
@@ -124,7 +121,7 @@ export default class Recomado {
 function appendElement(parent, className, text) {
   let element;
 
-  //classNameがactionで'note'の場合，textareaを作成
+  //classNameがactionで'note'or 'ふせん' の場合，textareaを作成
   if (className === "action" && text !== "☞" && text !== "♥") {
     element = document.createElement("textarea");
   } else if (className === "image") {
