@@ -6,8 +6,6 @@ export default class Recomado {
     this.#ul = ul;
     this.#autoscroll = autoscroll;
 
-    
-
     const startedTime = new Date(_tempStartTime);
     const response = await fetch(annotations);
     this.#annotations = await response.json();

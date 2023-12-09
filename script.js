@@ -3,26 +3,36 @@ const recomado = new Recomado();
 
 let movieURL;
 let annotationsURL;
+let startUtcTime;
 
 
 document.getElementById("movie").addEventListener("change", (e) => {
   const file = e.target.files[0];
   movieURL = URL.createObjectURL(file);
+  console.log(movieURL);
 });
 document.getElementById("annotations").addEventListener("change", (e) => {
   const file = e.target.files[0];
   annotationsURL = URL.createObjectURL(file);
 });
 
+
+document.getElementById("time").addEventListener("click", (e) => {
+  const time = document.getElementById("startTime").value;
+  startUtcTime = new Date(time).toISOString();
+})
+
 document.getElementById("apply").addEventListener("click", (e) => {
+  console.log("clicked");
   recomado.init({
     video: document.querySelector("video"),
     ul: document.querySelector("ul"),
     autoscroll: document.querySelector("#autoscroll"),
     movie: movieURL,
     annotations: annotationsURL,
-    _tempStartTime: "2023-09-29T08:51:22.000Z",
+    _tempStartTime: startUtcTime,
   });
+
 });
 document.getElementById("save").addEventListener("click", (e) => {
   const textareas = [...document.querySelectorAll("textarea.action")];
