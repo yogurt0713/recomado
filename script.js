@@ -18,12 +18,17 @@ document.getElementById("annotations").addEventListener("change", (e) => {
 
 
 document.getElementById("time").addEventListener("click", (e) => {
+  //valueから得られたtimeをJSTからUTCに変換
   const time = document.getElementById("startTime").value;
-  startUtcTime = new Date(time).toISOString();
+  const localtime = new Date(time);
+  localtime.setHours(localtime.getHours() - 9);
+  
+  startUtcTime = new Date(localtime).toISOString();
+
+  console.log(startUtcTime);
 })
 
 document.getElementById("apply").addEventListener("click", (e) => {
-  console.log("clicked");
   recomado.init({
     video: document.querySelector("video"),
     ul: document.querySelector("ul"),

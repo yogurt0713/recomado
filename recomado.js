@@ -18,7 +18,12 @@ export default class Recomado {
       image.src = "images/" + annotation.image;
 
 
-      appendElement(li, "participant", annotation.participantName);
+      appendElement(li, "participant", annotation.participantName).addEventListener(
+        "change",
+        (e) => {
+          annotation.participantName = e.target.value;
+        }
+      );
 
       switch (annotation.action) {
         case "note": {
@@ -124,6 +129,10 @@ function appendElement(parent, className, text) {
     element = document.createElement("textarea");
   } else if (className === "image") {
     element = document.createElement("img");
+  }
+  else if (className === "participant") {
+    element = document.createElement("input");
+    element.value = text;
   } else {
     element = document.createElement("span");
   }
