@@ -1,10 +1,10 @@
 export default class Recomado {
-  async init({ video, ul, autoscroll, movie, annotations, _tempStartTime }) {
+  async init({ video, ul, movie, annotations, _tempStartTime }) {
     this.#video = video;
     this.#video.src = movie;
 
     this.#ul = ul;
-    this.#autoscroll = autoscroll;
+    
 
     const startedTime = new Date(_tempStartTime);
     const response = await fetch(annotations);
@@ -78,66 +78,142 @@ export default class Recomado {
       const li = e.target.closest("li");
       const elapsedTimeMS = li.dataset.elapsedTimeMS;
       this.#video.currentTime = elapsedTimeMS / 1000;
+
+    
+     
     });
 
-    this.#updateUserScrollEnabled();
-    this.#autoscroll.addEventListener("scrollchange", (e) => {
-      this.#updateUserScrollEnabled();
-    });
 
-    const lis = [...this.#ul.querySelectorAll("li")];
-    this.#video.addEventListener("timeupdate", (e) => {
-      if (!this.#autoscroll.checked) {
-        return;
+    /*videoが再生中，再生時間がannotationsの時間と一致したら，そのannotationsのliをハイライト*/
+    /*     this.#video.addEventListener("play", (e) => {
+    
+          this.#video.addEventListener("timeupdate", (e) => {
+            const currentTime = this.#video.currentTime * 1000;
+            const closestAnnotation = this.findClosestAnnotation(currentTime);
+            console.log(closestAnnotation);
+    
+            this.removeHightLight();
+    
+            if (closestAnnotation) {
+              closestAnnotation.classList.add("highlight");
+              console.log("highlight");
+    
+              //スクロール位置の調整
+              //ulのvisibleのTopにclosestAnnotationのTopを合わせる
+              closestAnnotation.scrollIntoView({ behaviour: "smooth", block: "center" });
+            
+          
+            }
+          });
+        }); */
+
+    let timeUpdateListener = null;
+    
+    this.#video.addEventListener("play", (e) => {
+      if (timeUpdateListener === null) {
+        timeUpdateListener = (e) => {
+          const currentTime = this.#video.currentTime * 1000;
+          const closestAnnotation = this.findClosestAnnotation(currentTime);
+          console.log(closestAnnotation);
+
+          this.removeHightLight();
+
+          if (closestAnnotation) {
+            closestAnnotation.classList.add("highlight");
+            console.log("highlight");
+
+            //スクロール位置の調整
+            //ulのvisibleのTopにclosestAnnotationのTopを合わせる
+            closestAnnotation.scrollIntoView({ behaviour: "smooth", block: "center" });
+          
+          
+          }
+        };
+        this.#video.addEventListener("timeupdate", timeUpdateListener);
       }
-
-      const focusTimeMS = this.#video.currentTime * 1000 - 1000;
-      const focusable = lis.find(
-        (li) => li.dataset.elapsedTimeMS > focusTimeMS
-      );
-      focusable.scrollIntoView(true);
     });
+
+    this.#video.addEventListener("pause", (e) => {
+      if (timeUpdateListener !== null) {
+        this.#video.removeEventListener("timeupdate", timeUpdateListener);
+        timeUpdateListener = null;
+      }
+    });
+
   }
 
-  #updateUserScrollEnabled() {
-    if (this.#autoscroll.checked) {
-      this.#ul.classList.add("user_scroll_disabled");
-    } else {
-      this.#ul.classList.remove("user_scroll_disabled");
+  findClosestAnnotation(currentTime) {
+      
+    let closestAnnotation = null;
+    let minTimeDifference = Infinity;
+
+    for (const li of this.#ul.querySelectorAll("li")) {
+      const elapsedTimeMS = parseFloat(li.dataset.elapsedTimeMS);
+      const timeDifference = Math.abs(elapsedTimeMS - currentTime);
+
+      if (timeDifference < minTimeDifference) {
+        minTimeDifference = timeDifference;
+        closestAnnotation = li;
+      }
     }
+
+    return closestAnnotation;
+
   }
+
+  removeHightLight(){
+      for (const li of this.#ul.querySelectorAll("li")) {
+        li.classList.remove("highlight");
+      }
+    }
 
   logAnnotations() {
-    console.log(JSON.stringify(this.#annotations, null, 2));
-  }
+      console.log(JSON.stringify(this.#annotations, null, 2));
+    }
 
   getAnnotations() {
-    return JSON.stringify(this.#annotations, null, 2);
-  }
+      const filteredAnnotations = this.#annotations.filter((annotation) => annotation.noteText !== "");
+      return JSON.stringify(filteredAnnotations, null, 2);
+    }
 
   #annotations = null;
   #video = null;
   #ul = null;
-  #autoscroll = null;
+ 
 }
 
 function appendElement(parent, className, text) {
   let element;
 
-  //classNameがactionで'note'or 'ふせん' の場合，textareaを作成
-  if (className === "action" && text !== "☞" && text !== "♥") {
-    element = document.createElement("textarea");
-  } else if (className === "image") {
-    element = document.createElement("img");
+  //classNameがactionで'note'or 'ふせん' でなく，textが空でない場合，textareaを作成
+
+  if (text !== "☞" && text !== "♥" ) {
+    switch (className) {
+      case "action": {
+        element = document.createElement("textarea");
+        break;
+      }
+      case "image": {
+        element = document.createElement("img");
+        break;
+      }
+      case "participant": {
+        element = document.createElement("input");
+        element.value = text;
+        break;
+      }
+      default: {
+        element = document.createElement("span");
+        break;
+      }
+    }
+    element.classList.add(className);
+    element.textContent = text;
+    parent.append(element);
   }
-  else if (className === "participant") {
-    element = document.createElement("input");
-    element.value = text;
-  } else {
-    element = document.createElement("span");
-  }
-  element.classList.add(className);
-  element.textContent = text;
-  parent.append(element);
   return element;
-}
+  
+  }
+
+
+
