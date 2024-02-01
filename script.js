@@ -1,5 +1,5 @@
 import Recomado from "./recomado.js";
-const recomado = new Recomado();
+let recomado;
 
 let movieURL;
 let annotationsURL;
@@ -29,10 +29,10 @@ document.getElementById("time").addEventListener("click", (e) => {
 })
 
 document.getElementById("apply").addEventListener("click", (e) => {
+  recomado = new Recomado();
   recomado.init({
     video: document.querySelector("video"),
     ul: document.querySelector("ul"),
-    autoscroll: document.querySelector("#autoscroll"),
     movie: movieURL,
     annotations: annotationsURL,
     _tempStartTime: startUtcTime,
@@ -48,7 +48,7 @@ document.getElementById("save").addEventListener("click", (e) => {
 });
 
 document.getElementById("downloadButton").addEventListener("click", (e) => {
-  const jsonString = recomado.getAnnotations();
+  let jsonString = recomado.getAnnotations();
   const blob = new Blob([jsonString], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -61,3 +61,4 @@ document.getElementById("downloadButton").addEventListener("click", (e) => {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 });
+

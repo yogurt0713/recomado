@@ -8,13 +8,15 @@
     }
     
     ul {
-        margin: 0;
+        margin-top: 20;
+        padding-bottom: 20;
         padding: 0;
         height: 400px;
         overflow-y: scroll;
+        border: 1px solid gray;
     }
     
-    li {
+    ul li {
         display: grid;
         grid-template-areas: "image time participant" "image action action";
         grid-template-columns: auto auto 1fr;
@@ -22,11 +24,15 @@
         cursor: default;
     }
     
-    li:hover {
+    ul li:hover {
         background-color: #ededf0;
     }
     
-    .image {
+    ul li.highlight {
+        background-color: #ededf0;
+    }
+    
+    li .image {
         grid-area: image;
         margin-inline-end: 1em;
         height: 60px;
@@ -35,18 +41,18 @@
         background-color: black;
     }
     
-    .time {
+    li .time {
         grid-area: time;
         margin-inline-end: 0.5em;
         font-size: small;
     }
     
-    .participant {
+    li .participant {
         grid-area: participant;
         font-size: small;
     }
     
-    .action {
+    li .action {
         grid-area: action;
     }
     
@@ -85,7 +91,6 @@
             <button id="apply">Apply</button>
             <button id="save">ログを出力</button>
             <button id="downloadButton">JSONファイルDL</button>
-
         </div>
         <div class="column">
             <textarea id="logText" class="large-textarea"></textarea>
