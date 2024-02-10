@@ -21,11 +21,11 @@ document.getElementById("time").addEventListener("click", (e) => {
   //valueから得られたtimeをJSTからUTCに変換
   const time = document.getElementById("startTime").value;
   const localtime = new Date(time);
-  localtime.setHours(localtime.getHours() - 9);
+  localtime.setHours(localtime.getHours());
   
   startUtcTime = new Date(localtime).toISOString();
 
-  console.log(startUtcTime);
+  console.log(startJSTTime);
 })
 
 document.getElementById("apply").addEventListener("click", (e) => {
