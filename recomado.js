@@ -84,29 +84,6 @@ export default class Recomado {
     });
 
 
-    /*videoが再生中，再生時間がannotationsの時間と一致したら，そのannotationsのliをハイライト*/
-    /*     this.#video.addEventListener("play", (e) => {
-    
-          this.#video.addEventListener("timeupdate", (e) => {
-            const currentTime = this.#video.currentTime * 1000;
-            const closestAnnotation = this.findClosestAnnotation(currentTime);
-            console.log(closestAnnotation);
-    
-            this.removeHightLight();
-    
-            if (closestAnnotation) {
-              closestAnnotation.classList.add("highlight");
-              console.log("highlight");
-    
-              //スクロール位置の調整
-              //ulのvisibleのTopにclosestAnnotationのTopを合わせる
-              closestAnnotation.scrollIntoView({ behaviour: "smooth", block: "center" });
-            
-          
-            }
-          });
-        }); */
-
     let timeUpdateListener = null;
     
     this.#video.addEventListener("play", (e) => {
@@ -114,17 +91,17 @@ export default class Recomado {
         timeUpdateListener = (e) => {
           const currentTime = this.#video.currentTime * 1000;
           const closestAnnotation = this.findClosestAnnotation(currentTime);
-          console.log(closestAnnotation);
+          //console.log(closestAnnotation);
 
           this.removeHightLight();
 
           if (closestAnnotation) {
             closestAnnotation.classList.add("highlight");
-            console.log("highlight");
+            //console.log("highlight");
 
             //スクロール位置の調整
             //ulのvisibleのTopにclosestAnnotationのTopを合わせる
-            closestAnnotation.scrollIntoView({ behaviour: "smooth", block: "center" });
+            closestAnnotation.scrollIntoView({ behaviour: "smooth", block: "nearest" });
           
           
           }
