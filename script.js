@@ -3,7 +3,7 @@ let recomado;
 
 let movieURL;
 let annotationsURL;
-let startUtcTime;
+let startJSTTime;
 
 
 document.getElementById("movie").addEventListener("change", (e) => {
@@ -16,6 +16,13 @@ document.getElementById("annotations").addEventListener("change", (e) => {
   annotationsURL = URL.createObjectURL(file);
 });
 
+document.getElementById("recordList").addEventListener("click", (e) => {
+  var rect = e.target.getBoundingClientRect();
+  console.log('rect', rect);
+  console.log('e.clientY', e.clientY);
+  e.target.scrollTop = e.clientY - rect.top;
+ 
+});
 
 document.getElementById("time").addEventListener("click", (e) => {
   //valueから得られたtimeをJSTからUTCに変換
@@ -23,7 +30,7 @@ document.getElementById("time").addEventListener("click", (e) => {
   const localtime = new Date(time);
   localtime.setHours(localtime.getHours());
   
-  startUtcTime = new Date(localtime).toISOString();
+  startJSTTime = new Date(localtime).toISOString();
 
   console.log(startJSTTime);
 })
@@ -35,7 +42,7 @@ document.getElementById("apply").addEventListener("click", (e) => {
     ul: document.querySelector("ul"),
     movie: movieURL,
     annotations: annotationsURL,
-    _tempStartTime: startUtcTime,
+    _tempStartTime: startJSTTime,
   });
 
 });
