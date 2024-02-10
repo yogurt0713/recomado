@@ -16,6 +16,13 @@ document.getElementById("annotations").addEventListener("change", (e) => {
   annotationsURL = URL.createObjectURL(file);
 });
 
+document.getElementById("recordList").addEventListener("click", (e) => {
+  var rect = e.target.getBoundingClientRect();
+  console.log('rect', rect);
+  console.log('e.clientY', e.clientY);
+  e.target.scrollTop = e.clientY - rect.top;
+ 
+});
 
 document.getElementById("time").addEventListener("click", (e) => {
   //valueから得られたtimeをJSTからUTCに変換
