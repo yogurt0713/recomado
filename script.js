@@ -9,7 +9,7 @@ let startJSTTime;
 document.getElementById("movie").addEventListener("change", (e) => {
   const file = e.target.files[0];
   movieURL = URL.createObjectURL(file);
-  console.log(movieURL);
+  
 });
 document.getElementById("annotations").addEventListener("change", (e) => {
   const file = e.target.files[0];
